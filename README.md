@@ -1,3 +1,4 @@
 # jQuery Tabs
 
-Using jQuery for tabs with URL hash
+Using jQuery for creating tabs with URL hash.
+After page reload tab still will be opened.
