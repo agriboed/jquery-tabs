@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery tabs</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <ul class="tabs">
+        <li><a href="#tab_first">Tab 1</a></li>
+        <li><a href="#tab_second">Tab 2</a></li>
+        <li><a href="#tab_third">Tab 3</a></li>
+        <li><a href="#tab_fourth">Tab 4</a></li>
+    </ul>
+    <div class="tabs_content">
+        <div class="tab" id="tab_first">
+            <h1>Tab 1</h1>
+        </div>
+        <div class="tab" id="tab_second">
+            <h1>Tab 2</h1>
+        </div>
+        <div class="tab" id="tab_third">
+            <h1>Tab 3</h1>
+        </div>
+        <div class="tab" id="tab_fourth">
+            <h1>Tab 4</h1>
+        </div>
+    </div>
+</div>
+<style>
+    .container {
+        max-width: 1000px;
+        margin: 50px auto;
+    }
+
+    ul.tabs {
+        list-style: none;
+        border: 1px solid #ccc;
+        text-align: center;
+        background: #fff;
+    }
+
+    ul.tabs li {
+        display: inline-block;
+        width: 200px;
+        background: #fff;
+        margin: 0;
+        text-align: center;
+    }
+
+    ul.tabs li a {
+        text-decoration: none;
+        font-size: 18px;
+        display: block;
+        padding: 10px 0;
+    }
+
+    ul.tabs li a:active,
+    ul.tabs li a:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+    ul.tabs li.active {
+        background: #f2f2f2;
+    }
+
+    .tab {
+        display: none;
+        padding: 20px 0;
+    }
+
+    .tab.active {
+        display: block;
+    }
+</style>
+<script>
+    (function ($) {
+        var tabs_content = $('.tabs_content .tab'),
+            tabs = $('ul.tabs li'),
+            tab_link = $('ul.tabs li a'),
+            hash = window.location.hash;
+
+        if (hash) {
+            tabs.each(function () {
+                if ($(this).find('a').attr('href') + '_' === hash)
+                    $(this).addClass('active');
+            });
+
+            tabs_content.each(function () {
+                if ('#' + $(this).attr('id') + '_' === hash)
+                    $(this).addClass('active');
+            });
+        }
+
+        tab_link.click(function (e) {
+            e.preventDefault();
+
+            var current = $(this),
+                id = current.attr('href');
+
+            tabs.each(function () {
+                $(this).removeClass('active');
+            });
+
+            current.parent().addClass('active');
+
+            tabs_content.each(function () {
+                $(this).hide();
+            });
+
+            $(id).show().addClass('active');
+
+            window.location.hash = id + '_';
+        });
+    })(jQuery);
+</script>
+</body>
+</html>
